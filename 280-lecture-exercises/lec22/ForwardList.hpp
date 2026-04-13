@@ -175,10 +175,21 @@ void ForwardList<T>::pop_back() {
 
 template<typename T>
 void ForwardList<T>::pop_back_impl(Node *n) {
-    assert(false);
+    if (n->next->next == nullptr) {
+        delete n->next;
+        n->next = nullptr;
+        return;
+    }
+    pop_back_impl(n->next);
 }
 
 template<typename T> template<typename Iter_type>
 void ForwardList<T>::prepend_range(Iter_type begin, Iter_type end) {
-    assert(false);
+    if (begin == end) {
+        return;
+    }
+    Iter_type temp = begin;
+    ++temp;
+    prepend_range(temp, end);
+    push_front(*begin);
 }
